@@ -1,19 +1,21 @@
-INF = 99999
+INF = 999
 
-n = int(input("Vertices: "))
-e = int(input("Edges: "))
+def floyd(g):
+    n = len(g)
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                g[i][j] = min(g[i][j], g[i][k] + g[k][j])
+    return g
 
-d = [[0 if i == j else INF for j in range(n)] for i in range(n)]
+g = [
+    [0, 3, INF, 7],
+    [8, 0, 2, INF],
+    [5, INF, 0, 1],
+    [2, INF, INF, 0]
+]
 
-print("Enter u v w:")
-for _ in range(e):
-    u, v, w = map(int, input().split())
-    d[u][v] = w
+ans = floyd(g)
 
-for k in range(n):
-    for i in range(n):
-        for j in range(n):
-            d[i][j] = min(d[i][j], d[i][k] + d[k][j])
-
-for r in d:
-    print(*["INF" if x == INF else x for x in r])
+for row in ans:
+    print(row)
