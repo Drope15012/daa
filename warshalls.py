@@ -1,11 +1,18 @@
-n = int(input("Vertices: "))
-g = [list(map(int, input().split())) for _ in range(n)]
+def warshall(g):
+    n = len(g)
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                g[i][j] = g[i][j] or (g[i][k] and g[k][j])
+    return g
 
-for k in range(n):
-    for i in range(n):
-        for j in range(n):
-            g[i][j] |= g[i][k] & g[k][j]
+g = [
+    [1,1,0],
+    [0,1,1],
+    [0,0,1]
+]
 
-print("Transitive Closure:")
-for r in g:
-    print(*r)
+ans = warshall(g)
+
+for i in ans:
+    print(i)
